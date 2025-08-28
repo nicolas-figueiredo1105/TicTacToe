@@ -1,0 +1,108 @@
+body {
+    background-color: #000000;
+	color: #FFFFFF;
+
+    font-family: "Kode Mono", monospace;
+}
+
+h1 {
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.ticGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+
+    width: fit-content;
+
+    margin: 0 auto;
+
+    border: 2px solid #FFFFFF;
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    background-color: #000000;
+    border: 3px solid #FFFFFF;
+
+    color: #FFFFFF;
+    font-size: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    
+}
+
+.square .content {
+    display: block;
+    transform: scale(0);
+    transition: transform 500ms ease;
+}
+
+.square.added .content {
+    transform: scale(1);
+    transition: transform 500ms ease;
+}
+
+#announcer {
+	font-size: 40px;
+	text-align: center;
+
+    height: 100px;
+
+    transform: scale(0);
+    transition: transform 0.5s ease;
+}
+
+#announcer.show {
+    transform: scale(1);
+}
+
+.score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.score p:first-child {
+    margin-right: 60px;
+}
+
+.score p {
+    padding: 0 5px 0;
+    border-bottom: 2px solid #FFFFFF;
+
+    font-size: 20px;
+
+    width: 80px;
+}
+
+button {
+	display: block;
+	margin: 40px auto;
+
+    padding: 20px 30px;
+
+    font-family: "Kode Mono", monospace;
+    font-size: 25px;
+    font-weight: bold;
+
+    background-color: #000000;
+    color: #FFFFFF;
+
+    border: 4px solid #FFFFFF;
+
+    transition: background linear 200ms;
+}
+
+button:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}

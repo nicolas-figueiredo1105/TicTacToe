@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" class="css">
+
+	<link rel="icon" type="image/x-icon" href="icon.png">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+	
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <script>
+        let count = 0;
+        let tictactoe = [['','',''],['', '', ''],['', '', '']];
+        let currentAction = '';
+
+		let xWin = 0;
+		let oWin = 0;
+
+		
+
+		function checkArr(arr){
+			 for(let i = 0; i < 3; i++){
+				 for(let j = 0; j < 3; j++){
+					 if(arr[i][j] == ''){
+						 return false;
+					 }
+				 }
+			 }
+			 return true;
+		}
+
+		function checkGame() {
+			let didWin = false;
+			let winner = "";
+
+			//Check for X
+			for(let i = 0; i < 3; i++){
+				if(tictactoe[0][i] == "X" && tictactoe[1][i] == "X" && tictactoe[2][i] == "X"){
+					didWin = true;
+					winner = "X";
+					break;
+				} 
+				if(tictactoe[i][0] == "X" && tictactoe[i][1] == "X" && tictactoe[i][2] == "X"){
+					didWin = true;
+					winner = "X";
+					break;
+				} 
+			}
+				if (tictactoe[0][0] == "X" && tictactoe[1][1] == "X" && tictactoe[2][2] == "X") {
+				    didWin = true;
+				    winner = "X";
+				} else if (tictactoe[0][2] == "X" && tictactoe[1][1] == "X" && tictactoe[2][0] == "X") {
+				    didWin = true;
+				    winner = "X";
+				}
+			  
+			//Check for O
+			for (let i = 0; i < 3; i++) {
+		        if (tictactoe[i][0] == "O" && tictactoe[i][1] == "O" && tictactoe[i][2] == "O") {
+		            didWin = true;
+		            winner = "O";
+		            break;
+		        }
+		        if (tictactoe[0][i] == "O" && tictactoe[1][i] == "O" && tictactoe[2][i] == "O") {
+		            didWin = true;
+		            winner = "O";
+		            break;
+		        }
+		    }
+
+		    if (tictactoe[0][0] == "O" && tictactoe[1][1] == "O" && tictactoe[2][2] == "O") {
+		        didWin = true;
+		        winner = "O";
+		    } else if (tictactoe[0][2] == "O" && tictactoe[1][1] == "O" && tictactoe[2][0] == "O") {
+		        didWin = true;
+		        winner = "O";
+		    }
+
+			if (didWin) {
+				const announcerElement = document.getElementById('announcer');
+				const squareElements = document.getElementsByClassName('square');
+				announcerElement.innerHTML = `The winner is ${winner}!`;
+				announcerElement.classList.add('show');
+
+
+				setTimeout(() => {
+					announcerElement.classList.remove('show');
+					Array.from(squareElements).forEach(square => {
+						square.classList.remove('added');
+					});
+					// Reset the game after a delay
+					setTimeout(() => {
+						reset();
+					}, 500); // Adjust as needed
+				}, 2000); // Adjust as needed
+
+
+				if(winner == "X"){
+					xWin++;
+					document.getElementById('gamer1').innerHTML = xWin;
+				} else if (winner == "O"){
+					oWin++;
+					document.getElementById('gamer2').innerHTML = xWin;
+				}
+    		} else if(checkArr(tictactoe) == true && didWin == false){
+				
+				const announcerElement = document.getElementById('announcer');
+				const squareElements = document.getElementsByClassName('square');
+        		announcerElement.innerHTML = `That's a Tie!`;
+        		announcerElement.classList.add('show');
+
+				setTimeout(() => {
+					announcerElement.classList.remove('show');
+					Array.from(squareElements).forEach(square => {
+						square.classList.remove('added');
+					});
+					// Add an additional delay if needed before resetting the game
+					setTimeout(() => {
+						reset();
+					}, 500); // Adjust as needed
+				}, 2000); // Adjust as needed
+			}
+		  }
+
+        function addAction(square){
+            if(count % 2 == 0){
+                currentAction = "X";
+            } else {
+                currentAction = "O";
+            }
+
+			const squareElement = document.getElementById(square);
+			const content = (currentAction === 'X') ? 'X' : 'O';
+
+			squareElement.innerHTML = '<div class="content">' + content + '</div>';
+			squareElement.offsetHeight;
+
+			squareElement.classList.add('added');
+
+
+			  if(square == 's1'){
+				  tictactoe[0][0] = currentAction;
+			  } else if(square == 's2'){
+				  tictactoe[0][1] = currentAction;
+			  } else if(square == 's3'){
+				  tictactoe[0][2] = currentAction;
+			  } else if(square == 's4'){
+				  tictactoe[1][0] = currentAction;
+			  } else if(square == 's5'){
+				  tictactoe[1][1] = currentAction;
+			  } else if(square == 's6'){
+				  tictactoe[1][2] = currentAction;
+			  } else if(square == 's7'){
+				  tictactoe[2][0] = currentAction;
+			  } else if(square == 's8'){
+				  tictactoe[2][1] = currentAction;
+			  } else if(square == 's9'){
+				  tictactoe[2][2] = currentAction;
+			  }
+			  
+            count++;
+
+			document.getElementById(square).style.pointerEvents = 'none';
+			checkGame();
+        }
+
+        function reset() {
+            for(let i = 1; i < 10; i++){
+                document.getElementById('s' + i).innerHTML = '';
+				document.getElementById('s' + i).style.pointerEvents = 'auto';
+            }
+            count = 0;
+			tictactoe = [['','',''],['', '', ''],['', '', '']];
+			document.getElementById('announcer').innerHTML = '';
+        }
+
+		function resetScores() {
+            for(let i = 1; i < 10; i++){
+                document.getElementById('s' + i).innerHTML = '';
+				document.getElementById('s' + i).style.pointerEvents = 'auto';
+            }
+            count = 0;
+			tictactoe = [['','',''],['', '', ''],['', '', '']];
+			document.getElementById('announcer').innerHTML = '';
+
+			document.getElementById('gamer1').innerHTML = '0';
+			document.getElementById('gamer2').innerHTML = '0';
+        }
+    </script>
+
+    <h1>Tic-Tac-Toe</h1>
+    <div class="ticGrid">
+        <div class="square" id="s1" onclick="addAction('s1')"></div>
+        <div class="square" id="s2" onclick="addAction('s2')"></div>
+        <div class="square" id="s3" onclick="addAction('s3')"></div>
+
+        <div class="square" id="s4" onclick="addAction('s4')"></div>
+        <div class="square" id="s5" onclick="addAction('s5')"></div>
+        <div class="square" id="s6" onclick="addAction('s6')"></div>
+
+        <div class="square" id="s7" onclick="addAction('s7')"></div>
+        <div class="square" id="s8" onclick="addAction('s8')"></div>
+        <div class="square" id="s9" onclick="addAction('s9')"></div>
+        
+    </div>
+    <button onclick="resetScores()">Reset</button>
+	<div id="announcer"></div> 
+	 <div class="score">
+	 	<p>X: &nbsp;<span id="gamer1"></span></p>
+	 	<p>O: &nbsp;<span id="gamer2"></span></p>
+	</div>
+
+	<script>
+		document.getElementById('gamer1').innerHTML = '0';
+		document.getElementById('gamer2').innerHTML = '0';
+	</script>
+	
+</body>
+</html>
